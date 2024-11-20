@@ -1,8 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react';
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { cn } from "../lib/utils";
 
+type SignUpFormProps = {
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  error: string | null;
+  setLoginStatus: (status: string) => void;
+};
 
 const LabelInputContainer = ({
   children,
@@ -27,7 +32,7 @@ const BottomGradient = () => {
   );
 };
 
-const SignUpForm = ({ handleSubmit, error, setLoginStatus }:any) => (
+const SignUpForm = ({ handleSubmit, error, setLoginStatus }: SignUpFormProps) => (
   <form className="my-2" onSubmit={handleSubmit} role="form">
       <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
           <LabelInputContainer>

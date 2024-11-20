@@ -163,14 +163,14 @@ function MembershipCard({ type, prices, features, onPay }: MembershipCardProps) 
   )
 }
 
-interface PaymentHistoryItem {
-  date: string;
-  transactionId: string;
-  months: number;
-  type: string;
-  amount: number;
-  status: string;
-}
+// interface PaymentHistoryItem {
+//   date: string;
+//   transactionId: string;
+//   months: number;
+//   type: string;
+//   amount: number;
+//   status: string;
+// }
 
 interface ConfirmationModalProps {
   isOpen: boolean;
@@ -226,32 +226,32 @@ function LoadingSpinner() {
 }
 
 export default function MembershipSelection() {
-  const [paymentHistory, setPaymentHistory] = useState<PaymentHistoryItem[]>([
-    {
-      date: "2023-04-01",
-      transactionId: "TRX-1001",
-      months: 1,
-      type: "Premium",
-      amount: 99.99,
-      status: "Paid"
-    },
-    {
-      date: "2023-05-01",
-      transactionId: "TRX-1002",
-      months: 3,
-      type: "Standard",
-      amount: 199.99,
-      status: "Paid"
-    },
-    {
-      date: "2023-06-01",
-      transactionId: "TRX-1003",
-      months: 6,
-      type: "Basic",
-      amount: 299.99,
-      status: "Paid"
-    }
-  ]);
+  // const [paymentHistory, setPaymentHistory] = useState<PaymentHistoryItem[]>([
+  //   {
+  //     date: "2023-04-01",
+  //     transactionId: "TRX-1001",
+  //     months: 1,
+  //     type: "Premium",
+  //     amount: 99.99,
+  //     status: "Paid"
+  //   },
+  //   {
+  //     date: "2023-05-01",
+  //     transactionId: "TRX-1002",
+  //     months: 3,
+  //     type: "Standard",
+  //     amount: 199.99,
+  //     status: "Paid"
+  //   },
+  //   {
+  //     date: "2023-06-01",
+  //     transactionId: "TRX-1003",
+  //     months: 6,
+  //     type: "Basic",
+  //     amount: 299.99,
+  //     status: "Paid"
+  //   }
+  // ]);
 
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -269,15 +269,15 @@ export default function MembershipSelection() {
     setIsLoading(true);
 
     setTimeout(() => {
-      const newPayment: PaymentHistoryItem = {
-        date: new Date().toISOString().split('T')[0],
-        transactionId: `TRX-${Math.floor(1000 + Math.random() * 9000)}`,
-        months: pendingPayment.duration,
-        type: pendingPayment.type,
-        amount: pendingPayment.amount,
-        status: "Paid"
-      };
-      setPaymentHistory(prevHistory => [newPayment, ...prevHistory]);
+      // const newPayment: PaymentHistoryItem = {
+      //   date: new Date().toISOString().split('T')[0],
+      //   transactionId: `TRX-${Math.floor(1000 + Math.random() * 9000)}`,
+      //   months: pendingPayment.duration,
+      //   type: pendingPayment.type,
+      //   amount: pendingPayment.amount,
+      //   status: "Paid"
+      // };
+      // setPaymentHistory(prevHistory => [newPayment, ...prevHistory]);
       setIsLoading(false);
       setPendingPayment(null);
       toast.success('Payment Confirmed');

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose';
 
 const connect = async () => {
   if (mongoose.connections[0].readyState) {
@@ -7,15 +7,11 @@ const connect = async () => {
   }
 
   try {
-    // await mongoose.connect(process.env.MONGO_URL, {
-    //   useNewUrlParser: true,
-    //   useUnifiedTopology: true,
-    // });
     console.log("MongoDB URL:", process.env.DATABASE_URL);
     await mongoose.connect(process.env.DATABASE_URL);
-    console.log("MongoDB URL:", process.env.DATABASE_URL);
     console.log("Mongo Connection successfully established.");
-  } catch (error) {
+  } catch (err) {
+    console.error("Error connecting to MongoDB:", err);
     throw new Error("Error connecting to Mongoose");
   }
 };

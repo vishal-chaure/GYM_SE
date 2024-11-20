@@ -3,8 +3,17 @@ import connect from "@/utils/db";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 
-export const POST = async (req: any) => {
-  const { username, fullname, email, password } = await req.json();
+// Define types for the request body
+interface RegisterRequestBody {
+  username: string;
+  fullname: string;
+  email: string;
+  password: string;
+}
+
+export const POST = async (req: Request) => {
+  // Parse the request body
+  const { username, fullname, email, password }: RegisterRequestBody = await req.json();
 
   try {
     await connect(); // Ensure this connection is successful
@@ -30,10 +39,17 @@ export const POST = async (req: any) => {
   try {
     await newUser.save();
     return new NextResponse("user is registered", { status: 200 });
-  } catch (err: any) {
-    console.log(err)
-    return new NextResponse(err, {
-      status: 500,
-    });
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.log(err.message);
+      return new NextResponse(err.message, {
+        status: 500,
+      });
+    } else {
+      console.log("An unknown error occurred");
+      return new NextResponse("Internal server error", {
+        status: 500,
+      });
+    }
   }
 };

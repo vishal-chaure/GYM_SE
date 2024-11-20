@@ -159,7 +159,7 @@ export const MobileSidebar = ({
 export const SidebarLink = ({
   link,
   className,
-  onClick,  // Add onClick here
+  // onClick,  // Add onClick here
   ...props
 }: {
   link: Links;

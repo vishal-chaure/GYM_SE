@@ -5,9 +5,10 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import User from "@/models/User";
 import connect from "@/utils/db";
-import { db } from "@/utils/prisma";
 
-export const authOptions: any = {
+
+
+ const authOptions = {
   providers: [
     CredentialsProvider({
       id: "credentials",
@@ -16,7 +17,10 @@ export const authOptions: any = {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials: any) {
+      async authorize(credentials: Record<"email" | "password", string> | undefined) {
+        if (!credentials) {
+          throw new Error("No credentials provided");
+        }
         try {
           await connect();
           const user = await User.findOne({ email: credentials.email });
@@ -33,8 +37,12 @@ export const authOptions: any = {
           } else {
             throw new Error("User not found");
           }
-        } catch (err: any) {
-          console.error("Error authorizing user:", err);
+        } catch (err: unknown) {
+          if (err instanceof Error) {
+            console.error("Error authorizing user:", err.message);
+          } else {
+            console.error("Unknown error occurred:", err);
+          }
           throw err;
         }
       },
@@ -45,31 +53,41 @@ export const authOptions: any = {
     }),
   ],
   callbacks: {
-    async signIn({ user, account }: { user: AuthUser; account: Account }) {
-      if (account?.provider == "credentials") {
+    async signIn({ user, account }: { user: AuthUser; account: Account | null }) {
+      if (account?.provider === "credentials") {
         return true;
       }
-      if (account?.provider == "github") {
+
+      if (account?.provider === "github") {
         await connect();
         try {
-          const existingUser = await User.findOne({ email: user.email });
-          if (!existingUser) {
-            const newUser = new User({
-              email: user.email,
-            });
-            await newUser.save();
-            console.log("Created new user:", newUser);
+          if (account) {
+            const existingUser = await User.findOne({ email: user.email });
+            if (!existingUser) {
+              const newUser = new User({
+                email: user.email,
+              });
+              await newUser.save();
+              console.log("Created new user:", newUser);
+            }
             return true;
+          } else {
+            return false;
           }
-          return true;
-        } catch (err) {
-          console.error("Error saving user:", err);
+        } catch (err: unknown) {
+          if (err instanceof Error) {
+            console.error("Error saving user:", err.message);
+          } else {
+            console.error("Unknown error occurred:", err);
+          }
           return false;
         }
       }
+
+      return false;
     },
   },
 };
 
-export const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
+export const handler = NextAuth(authOptions);

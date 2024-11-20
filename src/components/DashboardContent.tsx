@@ -1,63 +1,52 @@
 import React, { useEffect, useState } from 'react'
 import MembershipStatusBar from './MembershipStatusBar'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Payment, columns } from "../app/payments/columns"
-import { DataTable } from '@/app/payments/data-table'
+import { motion } from 'framer-motion'
+// import { Payment } from "../app/payments/columns"
 import SessionBooking from './dashboard/SessionBooking'
 
-const fetchData = async (): Promise<Payment[]> => {
-  // Fetch data from your API here.
-  return [
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "728ed52f",
-      amount: 1000,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "728ed52f",
-      amount: 1000,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "728ed52f",
-      amount: 1000,
-      status: "pending",
-      email: "m@example.com",
-    },
-    // ...
-  ]
-}
+// const fetchData = async (): Promise<Payment[]> => {
+//   // Fetch data from your API here.
+//   return [
+//     {
+//       id: "728ed52f",
+//       amount: 100,
+//       status: "pending",
+//       email: "m@example.com",
+//     },
+//     {
+//       id: "728ed52f",
+//       amount: 100,
+//       status: "pending",
+//       email: "m@example.com",
+//     },
+//     {
+//       id: "728ed52f",
+//       amount: 1000,
+//       status: "pending",
+//       email: "m@example.com",
+//     },
+//     {
+//       id: "728ed52f",
+//       amount: 1000,
+//       status: "pending",
+//       email: "m@example.com",
+//     },
+//     {
+//       id: "728ed52f",
+//       amount: 1000,
+//       status: "pending",
+//       email: "m@example.com",
+//     },
+//     // ...
+//   ]
+// }
 
 const DashboardContent = () => {
-  const [data, setData] = useState<Payment[]>([]);
+  // const [data, setData] = useState<Payment[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isPersonalInfoOpen, setIsPersonalInfoOpen] = useState(false)
-  const [isMembershipPopupOpen, setIsMembershipPopupOpen] = useState(false)
+  // const [isPersonalInfoOpen, setIsPersonalInfoOpen] = useState(false)
+  // const [isMembershipPopupOpen, setIsMembershipPopupOpen] = useState(false)
   const [expandedSession, setExpandedSession] = useState<number | null>(null)
-
-  const fadeInVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { duration: 0.3 } }
-  }
-
-  const dropdownVariants = {
-    hidden: { height: 0, opacity: 0 },
-    visible: { height: 'auto', opacity: 1, transition: { duration: 0.2, ease: 'easeInOut' } }
-  }
 
   const tableRowVariants = {
     hidden: { opacity: 0, x: -20 },
@@ -66,8 +55,8 @@ const DashboardContent = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const result = await fetchData();
-      setData(result);
+      // const result = await fetchData();
+      // setData(result);
       setLoading(false); // Set loading to false after data is fetched
     };
 
