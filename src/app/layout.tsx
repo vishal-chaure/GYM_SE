@@ -28,14 +28,13 @@ export default async function RootLayout({
 }>) {
   const session = await getServerSession();
   return (
-    <html lang="en">  
+    <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} dark`}
       >
         <SessionProvider session={session}>
-
-        {children}
-        <Toaster />
+          {children}
+          <Toaster />
         </SessionProvider>
       </body>
     </html>
